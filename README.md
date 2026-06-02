@@ -1,4 +1,4 @@
-<h1 align="center">ZombiaClient</h1>
+![Banner](/static/milktea_banner.png)
 
 <div align="center">
 
@@ -7,9 +7,11 @@
 ![Tauri](https://img.shields.io/badge/-Tauri-05122A?style=flat&logo=tauri)&nbsp;
 ![Tailwind](https://img.shields.io/badge/-Tailwind-05122A?style=flat&logo=tailwindcss)&nbsp;
 
-🚧 Work in progress 🚧
-
 </div>
+
+## Introduction
+
+Milk Tea (stylized as MilkTea) is a project that aims to create an alternative client for the web-based survival game [zombia.io](https://zombia.io). A work in progress 🚧
 
 ## Install
 Get the binaries from the releases page!
@@ -36,4 +38,3 @@ To build the client, run:
 ```sh
 pnpm run tauri build
 ```
-

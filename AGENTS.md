@@ -1,6 +1,6 @@
-# ZombiaTauriClient
+# Bamboo
 
-From the name, this is a native client for a game called zombia.io, made with Tauri.
+This project is a native client for a game called zombia.io, made with Tauri.
 
 ## Project Tech Stack
 - [Tauri v2](https://v2.tauri.app/)
@@ -11,7 +11,7 @@ From the name, this is a native client for a game called zombia.io, made with Ta
 
 ### Tauri plugins
 ```toml
-tauri-plugin-svelte = "1.1.0"
+tauri-plugin-svelte = "3"
 tauri = { version = "2", features = [] }
 tauri-plugin-opener = "2"
 serde = { version = "1", features = ["derive"] }
@@ -19,10 +19,88 @@ serde_json = "1"
 tauri-plugin-http = "2"
 ```
 
-## Project Quirks
-- This client connects to official servers for gameplay.
+## Debugging Tools
+
+### `debug-socket.js`
+
+Helps you with debugging possible issues created from communication mismatch between the client and server. Run `pnpm run debug-socket -h` for more info.
 
 ## Project Structure
-- `./src/` - frontend code: UI components are written in Svelte and engine components are written in JavaScript (with some .svelte.js files)
-- `./src-tauri/` - backend code in Rust, does not do too much other than holding Tauri configurations.
-- `./static/` - static assets such as images, fonts, and other resources that are served directly to the client.
+```
+Bamboo/
+├── src/                                # 
+│   ├── app.css                         # 
+│   ├── app.html                        # 
+│   ├── lib/                            # 
+│   │   ├── id.json                     # 
+│   │   ├── static.js                   # 
+│   │   ├── Assets/                     # 
+│   │   │   └── servers.json            # 
+│   │   ├── Components/                 # 
+│   │   │   ├── Intro/                  # 
+│   │   │   │   ├── Footer.svelte       # 
+│   │   │   │   ├── Intro.svelte        # 
+│   │   │   │   ├── Leaderboard.svelte  # 
+│   │   │   │   └── SideBar.svelte      # 
+│   │   │   └── UI/                     # 
+│   │   │       ├── AnnouncementOverlay.svelte # 
+│   │   │       ├── BuildingBar.svelte  # 
+│   │   │       ├── BuildingOverlay.svelte # 
+│   │   │       ├── Chat.svelte         # 
+│   │   │       ├── Consumables.svelte  # 
+│   │   │       ├── DayNightOverlay.svelte # 
+│   │   │       ├── DayNightTicker.svelte # 
+│   │   │       ├── Debug.svelte        # 
+│   │   │       ├── Leaderboard.svelte  # 
+│   │   │       ├── MenuIcons.svelte    # 
+│   │   │       ├── MenuParties.svelte  # 
+│   │   │       ├── MenuSettings.svelte # 
+│   │   │       ├── MenuShop.svelte     # 
+│   │   │       ├── MiniMap.svelte      # 
+│   │   │       ├── PartyMembers.svelte # 
+│   │   │       ├── PipOverlay.svelte   # 
+│   │   │       ├── PlacementOverlay.svelte.js # 
+│   │   │       ├── PopupOverlay.svelte # 
+│   │   │       ├── Resources.svelte    # 
+│   │   │       ├── Respawn.svelte      # 
+│   │   │       ├── ToolBar.svelte      # 
+│   │   │       ├── UI.svelte           # 
+│   │   │       └── UI.svelte.js        # 
+│   │   ├── Engine/                     # 
+│   │   │   ├── Game.js                 # 
+│   │   │   ├── InputPacketManager.js   # 
+│   │   │   ├── Util.svelte.js          # 
+│   │   │   ├── shared.svelte.js        # 
+│   │   │   ├── Network/                # 
+│   │   │   │   ├── Codec.js            # 
+│   │   │   │   ├── Network.svelte.js   # 
+│   │   │   │   └── zombia_codec.js     # 
+│   │   │   └── Renderer/               # 
+│   │   │       ├── EntityGrid.js       # 
+│   │   │       ├── Renderer.svelte.js  # 
+│   │   │       ├── Replicator.js       # 
+│   │   │       └── World.js            # 
+│   │   └── Models/                     # 
+│   │       ├── EffectNode.js           # 
+│   │       ├── EntityModels.js         # 
+│   │       ├── EntityNode.js           # 
+│   │       ├── GraphicsNode.js         # 
+│   │       ├── HarvesterSelectorModel.js # 
+│   │       ├── HealthBarModel.js       # 
+│   │       ├── LayerNode.js            # 
+│   │       ├── Model.js                # 
+│   │       ├── Node.js                 # 
+│   │       ├── PlayerModel.js          # 
+│   │       ├── RangeModel.js           # 
+│   │       ├── ShieldBarModel.js       # 
+│   │       ├── SpriteNode.js           # 
+│   │       ├── TextNode.js             # 
+│   │       ├── TintModel.js            # 
+│   │       └── TowerModel.js           # 
+│   └── routes/                         # 
+│       ├── +layout.js                  # 
+│       ├── +layout.svelte              # 
+│       └── +page.svelte                # 
+├── src-tauri/                          # 
+└── static/                             # 
+```

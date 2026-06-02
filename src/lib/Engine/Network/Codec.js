@@ -680,7 +680,7 @@ export default class {
     }
     let o;
     this.knownEntities = Object.keys(s);
-    if (this.game.ui.components?.uiDevHud?.devEnabled === true) { // never has one, but ig
+    if (this.game.ui?.components?.uiDevHud?.devEnabled === true) { // never has one, but ig
       o = t.readUint16() / 100;
     }
     return {

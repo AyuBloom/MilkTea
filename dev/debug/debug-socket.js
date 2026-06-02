@@ -150,6 +150,9 @@ const mockGame = {
     sendRpc: () => {},
     handleEntityUpdate: () => {},
   },
+  ui: {
+    components: {},
+  },
   renderer: {
     onServerDesync: () => {},
     world: {
