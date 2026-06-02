@@ -1,6 +1,4 @@
 <script>
-    import { Command } from "@tauri-apps/plugin-shell";
-
     import SideBar from "./SideBar.svelte";
     import Footer from "./Footer.svelte";
     import Leaderboard from "./Leaderboard.svelte";
@@ -12,21 +10,6 @@
 
     const { game } = $props();
     let inGame = $state(false);
-    let localServerProcess;
-
-    async function startLocalServer(server) {
-        if (!server.local || localServerProcess) return;
-
-        try {
-            const command = Command.sidecar("binaries/server", [
-                String(server.fallbackPort),
-                server.gameMode,
-            ]);
-            localServerProcess = await command.spawn();
-        } catch (error) {
-            console.warn("Unable to start local server sidecar.", error);
-        }
-    }
 
     async function connect() {
         /*
@@ -36,8 +19,6 @@
         */
         const server = servers.find((server) => server.id == gameOptions.state.selectedServer);
         if (!server) return;
-
-        await startLocalServer(server);
 
         game.network.setConnectionData(
             gameOptions.state.playerName,

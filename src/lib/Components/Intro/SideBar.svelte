@@ -9,11 +9,6 @@
             "Start with a huge number of resources without being able to earn any more. PvP is disabled. Survive as long as you can!",
     };
 
-    const defaultServer = {
-        standard: "v04001",
-        scarcity: "v04002",
-    };
-
     const sortedServers = {};
     for (const server of servers) {
         sortedServers[server.gameMode] ||= {};
@@ -22,10 +17,19 @@
     }
 
     $effect(() => {
-        const firstRegion = Object.keys(sortedServers[gameOptions.state.mode])[0];
-        const firstId = Object.keys(sortedServers[gameOptions.state.mode][firstRegion])[0];
-
-        gameOptions.state.selectedServer = firstId;
+        let mode = gameOptions.state.mode;
+        if (!sortedServers[mode]) {
+            mode = Object.keys(sortedServers)[0] || "standard";
+            gameOptions.state.mode = mode;
+        }
+        const regionObj = sortedServers[mode];
+        if (regionObj) {
+            const firstRegion = Object.keys(regionObj)[0];
+            if (firstRegion) {
+                const firstId = Object.keys(regionObj[firstRegion])[0];
+                gameOptions.state.selectedServer = firstId;
+            }
+        }
     });
 </script>
 

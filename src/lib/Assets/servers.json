@@ -1,33 +1,18 @@
 [
   {
-    "id": "local-standard",
-    "status": "Local",
-    "country": "Local",
-    "city": "Standard",
-    "fallbackPort": 8000,
-    "gameMode": "standard",
-    "local": true,
-    "url": "ws://127.0.0.1:8000",
-    "networking": "local"
-  },
-  {
-    "id": "local-scarcity",
-    "status": "Local",
-    "country": "Local",
-    "city": "Scarcity",
-    "fallbackPort": 8000,
-    "gameMode": "scarcity",
-    "local": true,
-    "url": "ws://127.0.0.1:8000",
-    "networking": "local"
-  },
-  {
     "id": "v04001",
     "status": "Low",
     "country": "Australia",
     "city": "Sydney",
     "fallbackPort": 8000,
-    "gameMode": "standard",
-    "networking": "official"
+    "gameMode": "standard"
+  },
+  {
+    "id": "v04002",
+    "status": "Low",
+    "country": "Australia",
+    "city": "Sydney",
+    "fallbackPort": 8000,
+    "gameMode": "scarcity"
   }
 ]

@@ -16,27 +16,6 @@
           "url": "https://zombia.io/*"
         }
       ]
-    },
-    "shell:default",
-    {
-      "identifier": "shell:allow-spawn",
-      "allow": [
-        {
-          "name": "binaries/server",
-          "sidecar": true,
-          "args": true
-        }
-      ]
-    },
-    {
-      "identifier": "shell:allow-execute",
-      "allow": [
-        {
-          "name": "binaries/server",
-          "sidecar": true,
-          "args": true
-        }
-      ]
     }
   ]
 }
