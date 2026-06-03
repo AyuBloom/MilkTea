@@ -49,5 +49,7 @@
 <style lang="postcss">
     strong {
         font-family: "Hammersmith One";
+        -webkit-text-stroke: 1px black;
+        paint-order: stroke fill;
     }
 </style>

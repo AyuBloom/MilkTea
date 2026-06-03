@@ -39,4 +39,10 @@ export default class extends Node {
   getString() {
     return this.text.text;
   }
+  setParent(t) {
+    super.setParent(t);
+    if (null == t) {
+      this.text.destroy();
+    }
+  }
 }

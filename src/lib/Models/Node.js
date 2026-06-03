@@ -12,6 +12,14 @@ export default class {
     return this.node;
   }
   setNode(t) {
+    if (this.node && this.node.parent) {
+      const parent = this.node.parent;
+      const index = parent.children.indexOf(this.node);
+      if (index > -1) {
+        parent.addChildAt(t, index);
+        parent.removeChild(this.node);
+      }
+    }
     this.node = t;
   }
   getParent() {

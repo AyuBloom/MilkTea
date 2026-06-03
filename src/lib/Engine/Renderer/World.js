@@ -55,11 +55,9 @@ export default class {
       this.entityGrid.updateEntity(this.entities[e.uid]));
   }
   removeEntity(t, e = true) {
-    if (this.entities[t].entityClass == "Resource") return;
-
-    (this.game.renderer.remove(this.entities[t], e),
-      delete this.entities[t],
-      this.entityGrid.removeEntity(parseInt(t)));
+    this.game.renderer.remove(this.entities[t], e);
+    delete this.entities[t];
+    this.entityGrid.removeEntity(parseInt(t));
   }
   updateEntity(t, e, r = false) {
     (true === r

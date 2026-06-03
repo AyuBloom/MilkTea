@@ -106,6 +106,9 @@ export default class extends Node {
     this.currentModel && this.currentModel.update(t, this.fromTick);
   }
   refreshModel() {
+    if (this.currentModel) {
+      this.currentModel.setParent(null);
+    }
     let t = this.targetTick.model,
       e = t;
     if (!(t in EntityModels))
