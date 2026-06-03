@@ -10,6 +10,8 @@
     let isWebGL = $state(null);
     let isWebGPU = $state(null);
 
+    let isInputLocked = $derived(game.inputPacketManager.inputsLocked);
+
     game.eventEmitter.on("EntityUpdate", (e) => {
         frameTime = e.averageServerFrameTime;
 
@@ -28,6 +30,9 @@
 </script>
 
 <div class="absolute lg:bottom-28 bottom-24 left-2 text-white">
+    {#if isInputLocked}
+        <p class="text-accent-gold">Inputs Locked</p>
+    {/if}
     {#if frameTime !== undefined}
         <p class={frameTime > 50 ? "overloaded" : frameTime > 30 ? "stressed" : ""}>
             {game.network.ping}ms / {frameTime}ms / {Math.round(1000 / msSinceLastTick)} TPS

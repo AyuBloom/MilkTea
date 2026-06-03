@@ -6,7 +6,7 @@ import UI from "$lib/Components/UI/UI.svelte.js";
 import Renderer from "./Renderer/Renderer.svelte.js";
 import Network from "./Network/Network.svelte.js";
 import Util from "./Util.svelte.js";
-import InputPacketManager from "./InputPacketManager.js";
+import InputPacketManager from "./InputPacketManager.svelte.js";
 
 export default new (class {
   constructor() {

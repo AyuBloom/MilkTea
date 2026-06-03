@@ -1,4 +1,5 @@
 export default class {
+  inputsLocked = $state(false);
   constructor(game) {
     this.game = game;
     this.movementPackets = {};
@@ -13,7 +14,13 @@ export default class {
       this.onEnterWorld.bind(this),
     );
   }
+  toggleInputLock() {
+    if (this.game.network.connected) {
+      this.inputsLocked = !this.inputsLocked;
+    }
+  }
   onEnterWorld() {
+    this.inputsLocked = false;
     if (!this.hasBoundKeys) {
       this.hasBoundKeys = true;
 
@@ -22,9 +29,19 @@ export default class {
       window.addEventListener("mousedown", this.onMouseDown.bind(this));
       window.addEventListener("mouseup", this.onMouseUp.bind(this));
       window.addEventListener("mousemove", this.onMouseMoved.bind(this));
+      window.addEventListener("focus", this.onWindowFocus.bind(this));
+    }
+  }
+  onWindowFocus() {
+    if (this.shiftDown) {
+      this.shiftDown = false;
+      this.game.eventEmitter.emit("16Up", {
+        which: 16,
+      });
     }
   }
   sendInputPacket(t, e) {
+    if (this.inputsLocked && e?.which !== 71) return;
     let r = {};
     for (let e of Object.keys(t))
       if (void 0 === this.movementPackets[e])
@@ -81,6 +98,7 @@ export default class {
         );
         break;
       case 32:
+        t.preventDefault();
         this.sendInputPacket(
           {
             space: true,
@@ -132,6 +150,7 @@ export default class {
         );
         break;
       case 32:
+        t.preventDefault();
         this.sendInputPacket(
           {
             space: false,
@@ -142,6 +161,9 @@ export default class {
       case 16:
         this.shiftDown = false;
         break;
+      case 71:
+        this.toggleInputLock();
+        break;
     }
     this.game.eventEmitter.emit(`${t.which}Up`, t);
   }
@@ -149,14 +171,16 @@ export default class {
     return this.lastSentYaw;
   }
   onMouseMoved(t) {
+    if (!this.game.ui.playerTick) return;
     const e = this.game.renderer.screenToWorld(t.clientX, t.clientY),
-      r = this.game.renderer.screenToYaw(t.clientX, t.clientY);
+      r = this.game.renderer.screenToYaw(t.clientX, t.clientY),
+      s = this.game.ui.playerTick.position;
     this.lastSentYaw = r;
     this.sendInputPacket(
       {
         mouseMoved: r,
-        x: Math.floor(e.x),
-        y: Math.floor(e.y),
+        x: Math.floor(e.x - s.x),
+        y: Math.floor(e.y - s.y),
       },
       t,
     );
@@ -188,6 +212,7 @@ export default class {
     });
   }
   onMouseUp(t) {
+    if (this.inputsLocked) return;
     if (3 == t.which || 2 == t.button) {
       this.rightMouseDown = false;
       return void this.game.eventEmitter.emit("rightMouseUp", t);

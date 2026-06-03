@@ -45,9 +45,11 @@ export default {
       const r = this.getParent();
       if (e) {
         if (r.isLocal()) {
-          if (true !== r.getTargetTick().dead) {
-            r.getTargetTick().aimingYaw = r.getFromTick().aimingYaw =
-              this.game.inputPacketManager.getLastSentYaw();
+          if (!0 !== r.getTargetTick().dead) {
+            if (0 == this.game.inputPacketManager.inputsLocked) {
+              r.getTargetTick().aimingYaw = r.getFromTick().aimingYaw =
+                this.game.inputPacketManager.getLastSentYaw();
+            }
           }
         }
         if (e.name !== this.lastName) {
@@ -998,7 +1000,10 @@ export default {
           case 2:
           default:
             this.weapon.setAnchor(0.5, 0.5);
-            this.weaponUpdateFunc = this.updateAntiClockwiseSwingingWeapon(300, 100);
+            this.weaponUpdateFunc = this.updateAntiClockwiseSwingingWeapon(
+              300,
+              100,
+            );
             break;
           case 4:
           case 5:
@@ -1006,7 +1011,10 @@ export default {
           case 7:
           case 8:
             this.weapon.setAnchor(0.5, 0.5);
-            this.weaponUpdateFunc = this.updateClockwiseSwingingWeapon(300, 100);
+            this.weaponUpdateFunc = this.updateClockwiseSwingingWeapon(
+              300,
+              100,
+            );
             break;
         }
         this.addAttachment(this.base, 2);
@@ -1110,8 +1118,7 @@ export default {
       super(game);
       this.resourceType = ["wood", "stone", "gold"][t.resourcePickupType];
       this.resourceType =
-        this.resourceType.charAt(0).toUpperCase() +
-        this.resourceType.slice(1);
+        this.resourceType.charAt(0).toUpperCase() + this.resourceType.slice(1);
       const e = new SpriteNode(
         this.game,
         `./static/images/Entity/Harvester/${this.resourceType}Pickup.svg`,
@@ -1133,5 +1140,5 @@ export default {
       this.addAttachment(this.text);
       this.setRotation(t.yaw);
     }
-  }
+  },
 };

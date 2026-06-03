@@ -3,6 +3,7 @@ import SpriteNode from "$lib/Models/SpriteNode";
 import TextNode from "$lib/Models/TextNode";
 import LayerNode from "$lib/Models/LayerNode.js";
 import EntityNode from "$lib/Models/EntityNode.js";
+import GraphicsNode from "$lib/Models/GraphicsNode.js";
 
 import * as PIXI from "pixi.js";
 const { Application, Assets, Ticker } = PIXI;
@@ -28,6 +29,7 @@ export default class {
 
     this.renderingFilters = [];
     this.fadingAttachments = {};
+    this.effects = [];
 
     this.scale = 1;
     this.zoomDimension = 1.5;
@@ -67,6 +69,7 @@ export default class {
       "EnterWorldResponse",
       this.onEnterWorld.bind(this),
     );
+    this.game.eventEmitter.on("LightningZapRpcReceived", this.onLightningZap.bind(this));
   }
   async initialiseRendererInstance() {
     this.ticker = new Ticker();
@@ -329,6 +332,7 @@ export default class {
       Math.round(100 * (performance.now() - e)) / 100 >= 10 &&
         this.longFrames++);
     for (let e of this.renderingFilters) e.update(t);
+    this.updateEffects();
     // game.debug.end();
   }
   clearFadingAttachments() {
@@ -440,5 +444,91 @@ export default class {
   }
   getHeight() {
     return this.renderer.renderer.height / window.devicePixelRatio;
+  }
+  onLightningZap(t) {
+    this.renderLightning(t);
+  }
+  renderLightning(t) {
+    if (!t || t.length < 2) return;
+    const e = new GraphicsNode(this.game);
+    this.projectiles.addAttachment(e, 2);
+    for (let i = 1; i < t.length; i++)
+      this.createLightningSegment(e, t[i - 1], t[i]);
+    this.effects.push({
+      drawEntity: e,
+      createdAt: performance.now(),
+    });
+  }
+  createLightningSegment(t, startPoint, endPoint) {
+    const s = this.game.util.angleTo(startPoint, endPoint),
+      n = Math.sqrt(this.game.util.measureDistance(startPoint, endPoint)),
+      r = 2 * (2 + Math.floor(3 * Math.random()));
+    let a = [];
+    a.push({
+      x: startPoint.x,
+      y: startPoint.y,
+    });
+    let o = {
+      x: startPoint.x,
+      y: startPoint.y,
+    };
+    for (let k = 0; k < r; k++) {
+      const segmentLen = (n / r) * (0.8 + 0.6 * Math.random()),
+        h = (s + (80 * Math.random() - 40) + 360) % 360,
+        l = {
+          x: o.x + Math.sin((h * Math.PI) / 180) * segmentLen,
+          y: o.y - Math.cos((h * Math.PI) / 180) * segmentLen,
+        };
+      a.push(l);
+      o = l;
+      if (k > 0 && k < r - 1) {
+        const branchAngle = h + (60 * Math.random() - 30),
+          branchLen = segmentLen * (0.3 + 0.4 * Math.random()),
+          branchPoint = {
+            x: l.x + Math.sin((branchAngle * Math.PI) / 180) * branchLen,
+            y: l.y - Math.cos((branchAngle * Math.PI) / 180) * branchLen,
+          };
+        t.draw.moveTo(l.x, l.y);
+        t.draw.lineTo(branchPoint.x, branchPoint.y);
+        t.draw.stroke({
+          width: 2,
+          color: 10083839,
+          alpha: 0.5,
+        });
+      }
+    }
+    a.push({
+      x: endPoint.x,
+      y: endPoint.y,
+    });
+    t.draw.moveTo(a[0].x, a[0].y);
+    for (let k = 1; k < a.length; k++) t.draw.lineTo(a[k].x, a[k].y);
+    t.draw.stroke({
+      width: 4,
+      color: 53247,
+      alpha: 0.4,
+    });
+    t.draw.moveTo(a[0].x, a[0].y);
+    for (let k = 1; k < a.length; k++) t.draw.lineTo(a[k].x, a[k].y);
+    t.draw.stroke({
+      width: 2,
+      color: 16777215,
+    });
+  }
+  updateEffects() {
+    const now = performance.now();
+    for (let idx = this.effects.length - 1; idx >= 0; idx--) {
+      const effect = this.effects[idx],
+        elapsed = now - effect.createdAt;
+      if (elapsed >= 100) {
+        this.projectiles.removeAttachment(effect.drawEntity);
+        this.effects.splice(idx, 1);
+        continue;
+      }
+      const fadeStart = 50,
+        fadeProgress = Math.min(1, Math.max(0, (elapsed - fadeStart) / (100 - fadeStart))),
+        randomAlpha = 0.8 + 0.3 * Math.random();
+      effect.drawEntity.setAlpha(Math.max(0, (1 - fadeProgress) * randomAlpha));
+    }
   }
 }
