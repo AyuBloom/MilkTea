@@ -1,6 +1,6 @@
 {
   "name": "milktea-zombia-client",
-  "version": "0.6.4",
+  "version": "0.6.7",
   "description": "",
   "type": "module",
   "scripts": {
@@ -12,7 +12,12 @@
     "tauri": "tauri",
     "debug-socket": "node tools/debug-socket.js",
     "unpack": "node tools/unpack.js",
-    "bump": "node tools/bump.js"
+    "bump": "node tools/bump.js",
+    "dist": "node tools/build.js",
+    "dist:all": "node tools/build.js all",
+    "dist:macos": "node tools/build.js macos",
+    "dist:windows": "node tools/build.js windows",
+    "dist:linux": "node tools/build.js linux"
   },
   "license": "MIT",
   "dependencies": {
