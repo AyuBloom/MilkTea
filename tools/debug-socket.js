@@ -68,7 +68,7 @@ A standalone CLI tool to connect to the game server, authenticate/enter the
 world, and monitor, decode, and log the network communication in real-time.
 
 Usage:
-  node dev/debug/debug-socket.js [options]
+  node tools/debug-socket.js [options]
   pnpm debug-socket [options]
 
 Options:

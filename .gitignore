@@ -10,7 +10,8 @@ gen
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# Zombia socket debug logs
-/debug_logs/
+# default tool outputs
+/debug_logs
+/unpacked
 
 static/images-backup/

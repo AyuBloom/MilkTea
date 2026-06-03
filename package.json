@@ -1,6 +1,6 @@
 {
   "name": "milktea-zombia-client",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "",
   "type": "module",
   "scripts": {
@@ -10,8 +10,9 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
     "tauri": "tauri",
-    "debug-socket": "node dev/debug/debug-socket.js",
-    "extract-sprites": "node dev/extract-sprites.js"
+    "debug-socket": "node tools/debug-socket.js",
+    "unpack": "node tools/unpack.js",
+    "bump": "node tools/bump.js"
   },
   "license": "MIT",
   "dependencies": {
