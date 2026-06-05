@@ -423,7 +423,7 @@
         if (e.size > 1) {
             game.ui.pendingPopups.push({
                 type: "confirmation",
-                message: `Are you sure you want to sell all <b>${buildingId}</b>s?`,
+                message: `Are you sure you want to sell all <b>${buildingId.split(/(?=[A-Z])/).join(" ")}s</b>?`,
                 callback: () => {
                     game.network.sendRpc({
                         name: "SellBuilding",
@@ -708,9 +708,9 @@
     }
     button {
         font-family: "Hammersmith One", Arial, Helvetica, sans-serif;
-        @apply h-9 leading-9 pl-2 pr-2 text-white text-left text-xs shadow-sm rounded transition hover:brightness-125;
+        @apply relative h-9 leading-9 pl-2 pr-2 text-white text-left text-xs shadow-sm rounded transition hover:brightness-125;
     }
     button::after {
-        @apply absolute right-6 text-white/50;
+        @apply absolute right-2 text-white/50;
     }
 </style>

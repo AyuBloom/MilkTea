@@ -57,16 +57,24 @@
             ? 'disabled'
             : ''} relative flex flex-row gap-2 h-16 w-full bg-white/10 rounded-sm p-2"
     >
-        <img
-            class="w-12 h-12"
-            alt={name}
-            src="/images/Ui/Icons/{_class}/{name}{tiers > 0
-                ? `Tier${0 == tools[name] ? 1 : shouldDisplayTier}`
-                : ''}.svg"
-        />
+        {#if name !== "ZombieShield"}
+            <img
+                class="w-12 h-12"
+                alt={name}
+                src="/images/Ui/Icons/{_class}/{name}{tiers > 0
+                    ? `Tier${0 == tools[name] ? 1 : shouldDisplayTier}`
+                    : ''}.svg"
+            />
+        {:else}
+            <img
+                class="w-12 h-12"
+                alt="ZombieShield"
+                src="/images/Ui/Icons/Armour/ZombieShield.svg"
+            />
+        {/if}
         <div class="flex flex-col -mt-1">
-            <p class="text-white">{name.split(/(?=[A-Z])/).join(" ")}</p>
-            <span class="text-[0.625rem] text-white/70">Tier {shouldDisplayTier}</span>
+            <p class="font-bold text-white">{name.split(/(?=[A-Z])/).join(" ")}</p>
+            <span class="text-[0.625rem] text-white">Tier {shouldDisplayTier}</span>
             <span
                 class="{canAfford
                     ? 'can-afford'

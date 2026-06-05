@@ -57,7 +57,7 @@
         <div class="flex flex-col w-full h-full gap-2">
             {#each partyMembers as member}
                 <div
-                    class="flex flex-row justify-between w-full h-12 p-2 rounded-sm bg-white/10 text-xs text-white"
+                    class="party-member flex flex-row justify-between w-full h-12 p-2 rounded-br-sm rounded-tr-sm bg-white/10 text-xs text-white"
                 >
                     <div class="flex flex-col">
                         <strong>{member.name}</strong>
@@ -330,6 +330,22 @@
     .disabled {
         pointer-events: none;
         opacity: 0.5 !important;
+    }
+
+    .party-member {
+        border-left: 2px solid #EEE;
+    }
+    .party-member:nth-child(1) {
+        border-left-color: #0096FF;
+    }
+    .party-member:nth-child(2) {
+        border-left-color: #8473d4;
+    }
+    .party-member:nth-child(3) {
+        border-left-color: #2ee322;
+    }
+    .party-member:nth-child(4) {
+        border-left-color: #e69050;
     }
 
     hr {
