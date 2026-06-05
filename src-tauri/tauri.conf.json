@@ -17,8 +17,7 @@
         "height": 768,
         "minWidth": 540,
         "minHeight": 540,
-        "zoomHotkeysEnabled": true,
-        "additionalBrowserArgs": "--enable-unsafe-webgpu"
+        "zoomHotkeysEnabled": true
       }
     ],
     "security": {

@@ -77,7 +77,6 @@ export default class {
 
     this.renderer = new Application();
     await this.renderer.init({
-      preference: "webgpu",
       backgroundColor: 2236962,
       antialias: gameOptions.state.needsRestart["Enable Antialiasing"],
       hello: true,
