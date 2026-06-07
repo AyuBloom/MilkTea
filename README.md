@@ -26,7 +26,9 @@ xattr -d com.apple.quarantine /Applications/MilkTea.app
 
 ## Development
 
-## 1. Setup Tauri
+### Setup
+
+#### 1. Setup Tauri
 Follow the prerequisites page for building Tauri ([here](https://v2.tauri.app/start/prerequisites/)).
 (If any problems arise, please make an issue) <br>
 Install NPM dependencies if you haven't already:
@@ -34,15 +36,22 @@ Install NPM dependencies if you haven't already:
 pnpm i
 ```
 
-## 2. Debug or build the client
-### Debug
+#### 2. Debug or build the client
+##### Debug
 To debug, run:
 ```sh
 pnpm run tauri dev
 ```
 
-### Build
+##### Build
 To build the client, run:
 ```sh
 pnpm run tauri build
 ```
+
+### Tools
+The project provides you with a decent selection of CLI tools that you can use to make development easier. See more at [`tools`](/tools).
+
+## Extras
+This project also contains a folder that is an archive of every (unminified) version of the web client's `app.js` file since public release. You can check them out at [`archive`](/archive).
+
